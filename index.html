@@ -12,10 +12,10 @@
         
         
         <script type ="module">
-            import * as THREE from 'js/build/three.module.js';
-            import { OrbitControls } from 'js/examples/jsm/controls/OrbitControls.js';
-            import { GLTFLoader } from 'js/examples/jsm/loaders/GLTFLoader.js';
-            import { RGBELoader } from 'js//examples/jsm/loaders/RGBELoader.js';
+            import * as THREE from './js/build/three.module.js';
+            import { OrbitControls } from './js/examples/jsm/controls/OrbitControls.js';
+            import { GLTFLoader } from './js/examples/jsm/loaders/GLTFLoader.js';
+            import { RGBELoader } from './js/examples/jsm/loaders/RGBELoader.js';
 
             let camera, scene, renderer;
 
@@ -30,9 +30,9 @@
                 
                 const loader = new GLTFLoader()
                 
-                loader.load('path/to/scene.gltf')
+                loader.load('/scene.gltf')
                 
-                    scene.add(gltf.scene);
+                    scene.add(gltf.scene); 
                     render();
 
 
