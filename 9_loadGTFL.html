@@ -14,24 +14,14 @@
       import { RGBELoader } from './js/examples/jsm/loaders/RGBELoader.js';
 
       let camera, scene, renderer, controls;
+    
+        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
 
-      const geometry2 = new THREE.SphereGeometry(0.75, 32, 32); //radius, resX, resY
-      const material2 = new THREE.MeshPhongMaterial();
-      const sphere = new THREE.Mesh(geometry2, material2);
-      sphere.position.x = -2; //move it to the left
-      scene.add(sphere);
-
-      init();
-      render();
-
-      function init() {
+        scene = new THREE.Scene();
 
         const container = document.createElement( 'div' );
         document.body.appendChild( container );
 
-        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
-
-        scene = new THREE.Scene();
 
         //the frameArea is from from https://threejsfundamentals.org/threejs/lessons/threejs-load-obj.html 
         function frameArea(sizeToFitOnScreen, boxSize, boxCenter, camera) {
@@ -60,6 +50,16 @@
           camera.lookAt(boxCenter.x, boxCenter.y, boxCenter.z);
         }
         
+
+        const geometry2 = new THREE.SphereGeometry(0.75, 32, 32); //radius, resX, resY
+        const material2 = new THREE.MeshPhongMaterial();
+        const sphere = new THREE.Mesh(geometry2, material2);
+        sphere.position.x = -2; //move it to the left
+        sphere.position.y = 0;
+        scene.add(sphere);
+        console.log(sphere.position.x);
+
+
         new RGBELoader()
         .setDataType( THREE.UnsignedByteType )
       
@@ -84,7 +84,9 @@
 
           render()
 
-      } );
+        } );
+
+
 
 
         renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -101,12 +103,28 @@
 
         controls = new OrbitControls( camera, renderer.domElement );
         controls.addEventListener( 'change', render ); // use if there is no animation loop
-      }
+    
+
+
+      const animate = function () {
+        requestAnimationFrame(animate);
+
+        controls.update();
+
+        moveObject(sphere, 0.05, 0.01);
+      
+    };
+
+    function moveObject(o, dx, dy) {
+      o.position.x += dx;
+      o.position.y += dy;
+    }
+
+    animate();
 
       function render() {        
         renderer.render( scene, camera );
       }
-      
       
       
     </script>
