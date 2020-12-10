@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
 	<head>
     <title>loading glTF mesh + textures</title>
 	</head>
 	<body>
+=======
+  <head>
+    <title>loading glTF mesh + textures</title>
+  </head>
+  <body>
+>>>>>>> b460534067c0d0b2f3f5dfeebd45aa2a78592050
     
    <script type="module">
 
@@ -11,6 +18,7 @@
       import { OrbitControls } from './js/examples/jsm/controls/OrbitControls.js'
       
       import { GLTFLoader } from './js/examples/jsm/loaders/GLTFLoader.js';
+<<<<<<< HEAD
 			import { RGBELoader } from './js/examples/jsm/loaders/RGBELoader.js';
 
 			let camera, scene, renderer, controls;
@@ -27,6 +35,29 @@
 			
 
 				scene = new THREE.Scene();
+=======
+      import { RGBELoader } from './js/examples/jsm/loaders/RGBELoader.js';
+
+      let camera, scene, renderer, controls;
+
+      const geometry2 = new THREE.SphereGeometry(0.75, 32, 32); //radius, resX, resY
+      const material2 = new THREE.MeshPhongMaterial();
+      const sphere = new THREE.Mesh(geometry2, material2);
+      sphere.position.x = -2; //move it to the left
+      scene.add(sphere);
+
+      init();
+      render();
+
+      function init() {
+
+        const container = document.createElement( 'div' );
+        document.body.appendChild( container );
+
+        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
+
+        scene = new THREE.Scene();
+>>>>>>> b460534067c0d0b2f3f5dfeebd45aa2a78592050
 
         //the frameArea is from from https://threejsfundamentals.org/threejs/lessons/threejs-load-obj.html 
         function frameArea(sizeToFitOnScreen, boxSize, boxCenter, camera) {
@@ -56,6 +87,7 @@
         }
         
         new RGBELoader()
+<<<<<<< HEAD
 					.setDataType( THREE.UnsignedByteType )
 					.setPath( 'gltfs/DamagedHelmet/' )
 					.load( 'royal_esplanade_1k.hdr', function ( texture ) {
@@ -127,4 +159,56 @@
       
 		</script>
 	</body>
+=======
+        .setDataType( THREE.UnsignedByteType )
+      
+        const loader = new GLTFLoader().setPath( 'gltf/' );
+        loader.load( 'scene.gltf', function ( gltf ) {
+
+          scene.add( gltf.scene );
+
+          // compute the box that contains all the stuff
+          // from root and below
+          const box = new THREE.Box3().setFromObject(gltf.scene);
+
+          const boxSize = box.getSize(new THREE.Vector3()).length();
+          const boxCenter = box.getCenter(new THREE.Vector3());
+
+          // set the camera to frame the box
+          frameArea(boxSize * 1.2, boxSize, boxCenter, camera);
+
+          // update the controls to handle the new size
+          controls.target.copy(boxCenter);
+          controls.update();
+
+          render()
+
+      } );
+
+
+        renderer = new THREE.WebGLRenderer( { antialias: true } );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+      
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1;
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        container.appendChild( renderer.domElement );
+
+        const pmremGenerator = new THREE.PMREMGenerator( renderer ); //PMREM  = Prefiltered, Mipmapped Radiance Environment Map
+        pmremGenerator.compileEquirectangularShader();
+
+        controls = new OrbitControls( camera, renderer.domElement );
+        controls.addEventListener( 'change', render ); // use if there is no animation loop
+      }
+
+      function render() {        
+        renderer.render( scene, camera );
+      }
+      
+      
+      
+    </script>
+  </body>
+>>>>>>> b460534067c0d0b2f3f5dfeebd45aa2a78592050
 </html>
