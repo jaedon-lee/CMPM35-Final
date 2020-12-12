@@ -8,6 +8,16 @@
     
    <script type="module">
 
+    /*
+    Our scene is a building with a sun and moon. 
+    The sun and moon are two objects with textures applied to them that are moving and spinning. 
+    There is one light that follows the sun, and four lights that don't move. The lights change
+    color and brightness with the position of the sun. 
+
+    source for building:
+    <https://sketchfab.com/3d-models/the-neko-stop-off-hand-painted-diorama-a5ea0bf252884fceabf1007e8050f3fc#download> 
+    */
+
       import * as THREE from './js/build/three.module.js'
       import { OrbitControls } from './js/examples/jsm/controls/OrbitControls.js'
       
@@ -101,6 +111,8 @@
           animateSun(sunlight);
           animateSun(sphere1); 
           animateMoon(sphere2);
+          rotateObject(sphere1, 0.04, 0);
+          rotateObject(sphere2, 0.04, 0); 
 
           renderer.render(scene, camera);
         };
@@ -172,6 +184,10 @@
           }
         }
 
+        function rotateObject(o, dx, dy) {
+          o.rotation.x += dx;
+          o.rotation.y += dy;
+        }
 
         animate();
           
